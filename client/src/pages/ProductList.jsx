@@ -35,10 +35,11 @@ function ProductList() {
     <div>
       <h1>Products</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {isLoggedIn && <Link to="/products/new">+ Add Product</Link>}
+      {isLoggedIn && <Link to="/products/new" className="top-link">+ Add Product</Link>}
       <table border="1" cellPadding="8">
         <thead>
           <tr>
+            <th>Image</th>
             <th>Name</th>
             <th>SKU</th>
             <th>Price</th>
@@ -49,7 +50,13 @@ function ProductList() {
         </thead>
         <tbody>
           {products.map((p) => (
-            <tr key={p.id} className={p.quantity < 5 ? 'low-stock' : ''}>
+  <tr key={p.id} className={p.quantity < 5 ? 'low-stock' : ''}>
+    <td>
+      {p.imageUrl ? (
+        <img
+          src={`http://localhost:5000${p.imageUrl}`}
+          alt={p.name}
+          style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}/>) : ('—')}</td>
               <td>{p.name}</td>
               <td>{p.sku}</td>
               <td>{p.price}</td>

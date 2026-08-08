@@ -35,7 +35,7 @@ function SupplierList() {
     <div>
       <h1>Suppliers</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {isLoggedIn && <Link to="/suppliers/new">+ Add Supplier</Link>}
+      {isLoggedIn && <Link to="/suppliers/new" className="top-link">+ Add Suppliers</Link>}
       <table border="1" cellPadding="8">
         <thead>
           <tr>

@@ -27,7 +27,10 @@ router.post('/', auth, upload.single('image'), (req, res, next) => {
   if (req.file) req.body.imageUrl = `/uploads/${req.file.filename}`;
   next();
 }, validateProduct, checkValidation, controller.create);
-router.put('/:id', auth, validateProduct, checkValidation, controller.update);
+router.put('/:id', auth, upload.single('image'), (req, res, next) => {
+  if (req.file) req.body.imageUrl = `/uploads/${req.file.filename}`;
+  next();
+}, validateProduct, checkValidation, controller.update);
 router.delete('/:id', auth, controller.remove);
 
 module.exports = router;

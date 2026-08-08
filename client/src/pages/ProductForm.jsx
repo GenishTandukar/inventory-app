@@ -9,6 +9,7 @@ function ProductForm() {
   const [quantity, setQuantity] = useState('');
   const [supplierId, setSupplierId] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [currentImageUrl, setCurrentImageUrl] = useState('');
   const [suppliers, setSuppliers] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ function ProductForm() {
         setPrice(res.data.price);
         setQuantity(res.data.quantity);
         setSupplierId(res.data.supplierId);
+        setCurrentImageUrl(res.data.imageUrl || '');
       });
     }
   }, [id]);
@@ -96,8 +98,9 @@ function ProductForm() {
           </select>
         </div>
         <div>
-          <label>Image</label>
-          <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+            <label>Image</label> {currentImageUrl && (<img src={`http://localhost:5000${currentImageUrl}`} alt="Current" 
+            style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '6px', marginBottom: '8px' }} />)}
+            <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
         </div>
         <button type="submit">Save</button>
       </form>
