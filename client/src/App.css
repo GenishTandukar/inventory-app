@@ -182,3 +182,7 @@
     border-right-color: var(--border);
   }
 }
+
+.low-stock {
+  background-color: #ffe0e0;
+}
