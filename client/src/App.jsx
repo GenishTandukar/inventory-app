@@ -4,6 +4,7 @@ import SupplierList from './pages/SupplierList';
 import Login from './pages/Login';
 import './App.css';
 import SupplierForm from './pages/SupplierForm';
+import ProductForm from './pages/ProductForm';
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="/suppliers" element={<SupplierList />} />
         <Route path="/suppliers/new" element={<SupplierForm />} />
         <Route path="/suppliers/:id/edit" element={<SupplierForm />} />
+        <Route path="/products/new" element={<ProductForm />} />
+        <Route path="/products/:id/edit" element={<ProductForm />} />
       </Routes>
     </BrowserRouter>
   );
