@@ -23,3 +23,16 @@ const PORT = process.env.PORT || 5000;
 sequelize.sync().then(() => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
+
+const { sequelize, User } = require('./models');
+const bcrypt = require('bcrypt');
+
+sequelize.sync().then(async () => {
+  const existing = await User.findOne({ where: { username: 'admin' } });
+  if (!existing) {
+    const passwordHash = await bcrypt.hash('admin123', 10);
+    await User.create({ username: 'admin', passwordHash });
+    console.log('Default admin created');
+  }
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});

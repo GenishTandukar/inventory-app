@@ -92,7 +92,7 @@ function ProductList() {
                 <td>
                   {p.imageUrl ? (
                     <img
-                      src={`http://localhost:5000${p.imageUrl}`}
+                      src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${p.imageUrl}`}
                       alt={p.name}
                       style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}
                     />

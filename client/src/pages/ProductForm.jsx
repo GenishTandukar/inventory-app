@@ -98,7 +98,7 @@ function ProductForm() {
           </select>
         </div>
         <div>
-            <label>Image</label> {currentImageUrl && (<img src={`http://localhost:5000${currentImageUrl}`} alt="Current" 
+            <label>Image</label> {currentImageUrl && (<img src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${p.imageUrl}`} alt="Current" 
             style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '6px', marginBottom: '8px' }} />)}
             <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
         </div>
