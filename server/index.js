@@ -17,6 +17,12 @@ app.use('/api/suppliers', require('./routes/supplierRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 
+// Catch-all error handler — prevents unhandled errors from crashing requests
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: 'Something went wrong on the server.' });
+});
+
 const PORT = process.env.PORT || 5000;
 
 sequelize.sync().then(async () => {
