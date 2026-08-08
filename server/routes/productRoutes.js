@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth');
 const upload = require('../middleware/upload');
 const express = require('express');
 const router = express.Router();
@@ -22,11 +23,11 @@ function checkValidation(req, res, next) {
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getOne);
-router.post('/', upload.single('image'), (req, res, next) => {
+router.post('/', auth, upload.single('image'), (req, res, next) => {
   if (req.file) req.body.imageUrl = `/uploads/${req.file.filename}`;
   next();
 }, validateProduct, checkValidation, controller.create);
-router.put('/:id', validateProduct, checkValidation, controller.update);
-router.delete('/:id', controller.remove);
+router.put('/:id', auth, validateProduct, checkValidation, controller.update);
+router.delete('/:id', auth, controller.remove);
 
 module.exports = router;
