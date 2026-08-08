@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Layout({ children }) {
   const isLoggedIn = !!localStorage.getItem('token');
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -13,13 +15,16 @@ function Layout({ children }) {
     <div>
       <nav className="navbar">
         <div className="navbar-brand">Inventory System</div>
-        <div className="navbar-links">
-          <Link to="/products">Products</Link>
-          <Link to="/suppliers">Suppliers</Link>
+        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </button>
+        <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
+          <Link to="/products" onClick={() => setMenuOpen(false)}>Products</Link>
+          <Link to="/suppliers" onClick={() => setMenuOpen(false)}>Suppliers</Link>
           {isLoggedIn ? (
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }}>Logout</button>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
           )}
         </div>
       </nav>
