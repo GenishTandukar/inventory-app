@@ -5,6 +5,7 @@ import api from '../api/axios';
 function ProductForm() {
   const [name, setName] = useState('');
   const [sku, setSku] = useState('');
+  const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [supplierId, setSupplierId] = useState('');
@@ -29,6 +30,7 @@ function ProductForm() {
         .then((res) => {
           setName(res.data.name);
           setSku(res.data.sku);
+          setDescription(res.data.description || '');
           setPrice(res.data.price);
           setQuantity(res.data.quantity);
           setSupplierId(res.data.supplierId);
@@ -55,6 +57,7 @@ function ProductForm() {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('sku', sku);
+    formData.append('description', description);
     formData.append('price', price);
     formData.append('quantity', quantity);
     formData.append('supplierId', supplierId);
@@ -101,6 +104,14 @@ function ProductForm() {
         <div>
           <label>SKU</label>
           <input value={sku} onChange={(e) => setSku(e.target.value)} />
+        </div>
+        <div>
+          <label>Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            rows="4"
+          />
         </div>
         <div>
           <label>Price</label>

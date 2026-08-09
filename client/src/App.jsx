@@ -6,6 +6,7 @@ import './App.css';
 import SupplierForm from './pages/SupplierForm';
 import ProductForm from './pages/ProductForm';
 import Layout from './components/Layout';
+import ProductView from './pages/ProductView';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/new" element={<ProductForm />} />
         <Route path="/products/:id/edit" element={<ProductForm />} />
+        <Route path="/products/:id/edit" element={<ProductForm />} />
+        <Route path="/products/:id" element={<ProductView />} />
         <Route path="/suppliers" element={<SupplierList />} />
         <Route path="/suppliers/new" element={<SupplierForm />} />
         <Route path="/suppliers/:id/edit" element={<SupplierForm />} />

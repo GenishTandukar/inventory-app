@@ -172,3 +172,21 @@ form button {
     font-size: 0.85rem;
   }
 }
+
+.product-view {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.product-view-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.product-view table {
+  text-align: left;
+}
