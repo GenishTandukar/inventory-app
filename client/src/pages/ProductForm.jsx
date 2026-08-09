@@ -16,17 +16,29 @@ function ProductForm() {
   const { id } = useParams();
   const isEdit = Boolean(id);
 
+  const [notFound, setNotFound] = useState(false);
+  const [pageLoading, setPageLoading] = useState(isEdit);
+
   useEffect(() => {
-    api.get('/suppliers').then((res) => setSuppliers(res.data));
+    api.get('/suppliers')
+      .then((res) => setSuppliers(res.data))
+      .catch(() => setSuppliers([]));
+
     if (isEdit) {
-      api.get(`/products/${id}`).then((res) => {
-        setName(res.data.name);
-        setSku(res.data.sku);
-        setPrice(res.data.price);
-        setQuantity(res.data.quantity);
-        setSupplierId(res.data.supplierId);
-        setCurrentImageUrl(res.data.imageUrl || '');
-      });
+      api.get(`/products/${id}`)
+        .then((res) => {
+          setName(res.data.name);
+          setSku(res.data.sku);
+          setPrice(res.data.price);
+          setQuantity(res.data.quantity);
+          setSupplierId(res.data.supplierId);
+          setCurrentImageUrl(res.data.imageUrl || '');
+          setPageLoading(false);
+        })
+        .catch(() => {
+          setNotFound(true);
+          setPageLoading(false);
+        });
     }
   }, [id]);
 
@@ -67,6 +79,16 @@ function ProductForm() {
     }
   };
 
+  if (pageLoading) return <p>Loading...</p>;
+  if (notFound) {
+    return (
+      <p>
+        This product no longer exists. It may have been removed.{' '}
+        <a href="/products">Back to Products</a>
+      </p>
+    );
+  }
+
   return (
     <div>
       <h1>{isEdit ? 'Edit Product' : 'Add Product'}</h1>
@@ -98,9 +120,15 @@ function ProductForm() {
           </select>
         </div>
         <div>
-            <label>Image</label> {currentImageUrl && (<img src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${p.imageUrl}`} alt="Current" 
-            style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '6px', marginBottom: '8px' }} />)}
-            <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+          <label>Image</label>
+          {currentImageUrl && (
+            <img
+              src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${currentImageUrl}`}
+              alt="Current"
+              style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '6px', marginBottom: '8px' }}
+            />
+          )}
+          <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
         </div>
         <button type="submit">Save</button>
       </form>
