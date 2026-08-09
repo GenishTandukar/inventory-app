@@ -23,12 +23,26 @@ function SupplierForm() {
     }
   }, [id]);
 
+  const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     if (!name.trim()) {
       setError('Supplier name is required');
+      return;
+    }
+    if (!email.trim()) {
+      setError('Email is required');
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+    if (!phone.trim()) {
+      setError('Phone number is required');
       return;
     }
 
@@ -41,7 +55,12 @@ function SupplierForm() {
       }
       navigate('/suppliers');
     } catch (err) {
-      setError(err.response?.data?.error || 'Something went wrong. Please try again.');
+      const serverErrors = err.response?.data?.errors;
+      if (serverErrors) {
+        setError(serverErrors.map((e) => e.msg).join(', '));
+      } else {
+        setError(err.response?.data?.error || 'Something went wrong. Please try again.');
+      }
     }
   };
 

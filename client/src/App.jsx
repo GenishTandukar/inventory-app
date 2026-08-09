@@ -18,7 +18,6 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/new" element={<ProductForm />} />
         <Route path="/products/:id/edit" element={<ProductForm />} />
-        <Route path="/products/:id/edit" element={<ProductForm />} />
         <Route path="/products/:id" element={<ProductView />} />
         <Route path="/suppliers" element={<SupplierList />} />
         <Route path="/suppliers/new" element={<SupplierForm />} />
