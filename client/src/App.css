@@ -10,8 +10,7 @@
 .navbar-brand {
   font-weight: bold;
   font-size: 1.6rem;
-  color: #ea580c; /* deeper, more saturated orange */
-  text-shadow: 0 0 8px rgba(234, 88, 12, 0.5); /* subtle orange glow, optional */
+  color: #ea580c;
 }
 
 .navbar-links {
