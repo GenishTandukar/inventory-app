@@ -190,3 +190,13 @@ form button {
 .product-view table {
   text-align: left;
 }
+
+table td a {
+  color: #f97316; /* match your orange theme */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+table td a:hover {
+  color: #fb923c;
+}
