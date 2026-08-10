@@ -100,7 +100,7 @@ function ProductList() {
                     '—'
                   )}
                 </td>
-                <td><Link to={`/products/${p.id}`}>{p.name}</Link></td>
+                <td><Link to={`/products/${p.id}`} className="product-name-link">{p.name}</Link></td>
                 <td>{p.sku}</td>
                 <td>{p.price}</td>
                 <td>{p.quantity}</td>
