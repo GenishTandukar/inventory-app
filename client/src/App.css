@@ -10,13 +10,8 @@
 .navbar-brand {
   font-weight: bold;
   font-size: 1.6rem;
-  color: #f97316;
-  -webkit-text-stroke: 0.5px white;
-  text-shadow:
-    -1px -1px 0 #fff,
-    1px -1px 0 #fff,
-    -1px 1px 0 #fff,
-    1px 1px 0 #fff;
+  color: #ea580c; /* deeper, more saturated orange */
+  text-shadow: 0 0 8px rgba(234, 88, 12, 0.5); /* subtle orange glow, optional */
 }
 
 .navbar-links {
@@ -28,12 +23,6 @@
 .navbar-links a {
   text-decoration: none;
   color: #e5e5e5;
-  -webkit-text-stroke: 0.4px white;
-  text-shadow:
-    -1px -1px 0 #fff,
-    1px -1px 0 #fff,
-    -1px 1px 0 #fff,
-    1px 1px 0 #fff;
 }
 
 .navbar-links a:hover {
