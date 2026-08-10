@@ -200,3 +200,7 @@ table td a {
 table td a:hover {
   color: #fb923c;
 }
+
+.product-name-link {
+  font-weight: bold;
+}
