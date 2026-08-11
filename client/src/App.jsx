@@ -7,6 +7,7 @@ import SupplierForm from './pages/SupplierForm';
 import ProductForm from './pages/ProductForm';
 import Layout from './components/Layout';
 import ProductView from './pages/ProductView';
+import ChangePassword from './pages/ChangePassword';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/suppliers" element={<SupplierList />} />
         <Route path="/suppliers/new" element={<SupplierForm />} />
         <Route path="/suppliers/:id/edit" element={<SupplierForm />} />
+        <Route path="/change-password" element={<ChangePassword />} />
       </Routes>
     </Layout>
   </BrowserRouter>

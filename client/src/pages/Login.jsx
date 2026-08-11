@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/axios';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ function Login() {
     }
 
     try {
-      const res = await api.post('/auth/login', { username, password });
+      const res = await api.post('/auth/login', { username, password, rememberMe });
       localStorage.setItem('token', res.data.token);
       navigate('/products');
     } catch (err) {
@@ -70,6 +71,18 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+        </div>
+
+        <div className="login-options">
+          <label className="login-remember">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            Remember Me
+          </label>
+          <Link to="/change-password" className="login-forgot-link">Forgot Password?</Link>
         </div>
 
         <button type="submit" className="login-button">Login</button>
