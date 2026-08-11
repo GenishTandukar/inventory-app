@@ -716,15 +716,23 @@ table td a:hover {
   gap: 8px;
   width: 100%;
   margin-bottom: 10px;
+  padding: 0 8px;
 }
 
 .supplier-detail-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   color: #ccc;
   font-size: 0.85rem;
+  text-align: left;
+}
+
+.supplier-detail-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .supplier-detail-row svg {
