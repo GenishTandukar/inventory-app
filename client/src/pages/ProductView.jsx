@@ -5,78 +5,72 @@ import api from '../api/axios';
 function ProductView() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [loading, setLoading] = useState(true);
   const isLoggedIn = !!localStorage.getItem('token');
 
   useEffect(() => {
     api.get(`/products/${id}`)
-      .then((res) => {
-        setProduct(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setNotFound(true);
-        setLoading(false);
-      });
+      .then((res) => setProduct(res.data))
+      .catch(() => setNotFound(true))
+      .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) return <p>Loading...</p>;
+
   if (notFound) {
     return (
       <p>
-        This product no longer exists.{' '}
+        This product no longer exists. It may have been removed.{' '}
         <Link to="/products">Back to Products</Link>
       </p>
     );
   }
 
   return (
-    <div className="product-view">
+    <div>
       <Link to="/products" className="top-link">← Back to Products</Link>
-      <h1>{product.name}</h1>
 
-      {product.imageUrl && (
-        <img
-          src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${product.imageUrl}`}
-          alt={product.name}
-          className="product-view-image"
-        />
-      )}
+      <div className="product-detail-card">
+        <div className="product-detail-image">
+          {product.imageUrl ? (
+            <img
+              src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${product.imageUrl}`}
+              alt={product.name}
+            />
+          ) : (
+            <div className="product-card-noimage">No image</div>
+          )}
+          {product.quantity < 5 && <span className="low-stock-badge">Low Stock</span>}
+        </div>
 
-      <table border="1" cellPadding="8">
-        <tbody>
-          <tr>
-            <th>SKU</th>
-            <td>{product.sku}</td>
-          </tr>
-          <tr>
-            <th>Description</th>
-            <td>{product.description || '—'}</td>
-          </tr>
-          <tr>
-            <th>Price</th>
-            <td>{product.price}</td>
-          </tr>
-          <tr>
-            <th>Quantity</th>
-            <td className={product.quantity < 5 ? 'low-stock' : ''}>
-              {product.quantity}
-              {product.quantity < 5 && ' (Low Stock)'}
-            </td>
-          </tr>
-          <tr>
-            <th>Supplier</th>
-            <td>{product.Supplier ? product.Supplier.name : '—'}</td>
-          </tr>
-        </tbody>
-      </table>
+        <div className="product-detail-info">
+          <h1 className="product-detail-name">{product.name}</h1>
+          <span className="product-card-sku">{product.sku}</span>
+          <p className="product-detail-price">Rs. {product.price}</p>
 
-      {isLoggedIn && (
-        <Link to={`/products/${product.id}/edit`} className="top-link">
-          Edit this product
-        </Link>
-      )}
+          {product.description && (
+            <p className="product-detail-description">{product.description}</p>
+          )}
+
+          <div className="product-detail-stats">
+            <div className="product-detail-stat">
+              <span className="stat-label">Quantity</span>
+              <span className="stat-value">{product.quantity}</span>
+            </div>
+            <div className="product-detail-stat">
+              <span className="stat-label">Supplier</span>
+              <span className="stat-value">{product.Supplier ? product.Supplier.name : '—'}</span>
+            </div>
+          </div>
+
+          {isLoggedIn && (
+            <Link to={`/products/${product.id}/edit`} className="product-detail-edit-btn">
+              Edit this product
+            </Link>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
