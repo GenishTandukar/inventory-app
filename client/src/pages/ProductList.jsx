@@ -11,12 +11,10 @@ function ProductList() {
   const [error, setError] = useState('');
   const isLoggedIn = !!localStorage.getItem('token');
 
-  // Load suppliers once, for the filter dropdown
   useEffect(() => {
     api.get('/suppliers').then((res) => setSuppliers(res.data));
   }, []);
 
-  // Load products whenever search or supplierFilter changes
   useEffect(() => {
     setLoading(true);
     const params = {};
@@ -74,47 +72,39 @@ function ProductList() {
       ) : products.length === 0 ? (
         <p>No products found.</p>
       ) : (
-        <table border="1" cellPadding="8">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>SKU</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Supplier</th>
-              {isLoggedIn && <th>Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((p) => (
-              <tr key={p.id} className={p.quantity < 5 ? 'low-stock' : ''}>
-                <td>
-                  {p.imageUrl ? (
-                    <img
-                      src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${p.imageUrl}`}
-                      alt={p.name}
-                      style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}
-                    />
-                  ) : (
-                    '—'
-                  )}
-                </td>
-                <td><Link to={`/products/${p.id}`} className="product-name-link">{p.name}</Link></td>
-                <td>{p.sku}</td>
-                <td>{p.price}</td>
-                <td>{p.quantity}</td>
-                <td>{p.Supplier ? p.Supplier.name : '—'}</td>
-                {isLoggedIn && (
-                  <td>
-                    <Link to={`/products/${p.id}/edit`}>Edit</Link>{' '}
-                    <button onClick={() => handleDelete(p.id)}>Delete</button>
-                  </td>
+        <div className="product-grid">
+          {products.map((p) => (
+            <div key={p.id} className={`product-card ${p.quantity < 5 ? 'low-stock-card' : ''}`}>
+              <div className="product-card-image">
+                {p.imageUrl ? (
+                  <img
+                    src={`${import.meta.env.VITE_API_URL.replace('/api', '')}${p.imageUrl}`}
+                    alt={p.name}
+                  />
+                ) : (
+                  <div className="product-card-noimage">No image</div>
                 )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                {p.quantity < 5 && <span className="low-stock-badge">Low Stock</span>}
+              </div>
+
+              <div className="product-card-body">
+                <Link to={`/products/${p.id}`} className="product-card-name">{p.name}</Link>
+                <p className="product-card-sku">{p.sku}</p>
+                <p className="product-card-price">Rs. {p.price}</p>
+                <p className="product-card-meta">
+                  Qty: <strong>{p.quantity}</strong> &middot; {p.Supplier ? p.Supplier.name : '—'}
+                </p>
+
+                {isLoggedIn && (
+                  <div className="product-card-actions">
+                    <Link to={`/products/${p.id}/edit`}>Edit</Link>
+                    <button onClick={() => handleDelete(p.id)}>Delete</button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
